@@ -33,7 +33,9 @@ function CreateCosmosApp({ Component, pageProps }: AppProps) {
         assetLists={assets}
         wallets={wallets}
         signerOptions={signerOptions}
-      >
+endpointOptions={{
+  junotestnet: {rest: "https://lcd-juno.imperator.co", rpc: "https://rpc-juno.imperator.co"},
+}}      >
         <Component {...pageProps} />
       </WalletProvider>
     </ChakraProvider>
