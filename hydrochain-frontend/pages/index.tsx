@@ -28,6 +28,7 @@ import { WalletStatus } from '@cosmos-kit/core';
 import { Product, Dependency, WalletSection } from '../components';
 import { cosmos } from 'juno-network';
 import Head from 'next/head';
+import {Navbar} from "../components/navbar";
 
 import { HydrogenClient, HydrogenQueryClient } from '../codegen/Hydrogen.client'; 
 
@@ -80,21 +81,9 @@ const sendTokens = (
       gas: '86364'
     };
     const response = await stargateClient.signAndBroadcast(address, [msg], fee);
-    //setResp(JSON.stringify(response, null, 2));
+    console.log(response);    //setResp(JSON.stringify(response, null, 2));
   };
 };
-
-
-
-
-
-
-
-
-
-
-
-
 
 export default function Home() {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -169,6 +158,8 @@ export default function Home() {
     console.log('me tocaste')
   }
 
+  listContainer();
+
   const produceContract = async () => {
     const list = await hydrogenClient?.produce({
     colorSpectrum: "GREEN",
@@ -195,25 +186,21 @@ export default function Home() {
         </Button>
       </Flex>
       <Box textAlign="center">
+
         <Heading
           as="h1"
           fontSize={{ base: '3xl', sm: '4xl', md: '5xl' }}
           fontWeight="extrabold"
           mb={3}
         >
-          Create Cosmos App
+          HydroChain
         </Heading>
         <Heading
           as="h1"
           fontWeight="bold"
           fontSize={{ base: '2xl', sm: '3xl', md: '4xl' }}
         >
-          <Text as="span">Welcome to&nbsp;</Text>
-          <Text as="span" color={color}>
-            CosmosKit + Next.js +{' '}
-            <a href={library.href} target="_blank" rel="noreferrer">
-              {library.title}
-            </a>
+          <Text as="span">Hashing for a better future
           </Text>
         </Heading>
       </Box>
@@ -221,14 +208,7 @@ export default function Home() {
 
       {walletStatus === WalletStatus.Disconnected && (
         <Box textAlign="center">
-          <Heading
-            as="h3"
-            fontSize={{ base: '1xl', sm: '2xl', md: '2xl' }}
-            fontWeight="extrabold"
-            m={30}
-          >
-            Connect your wallet!
-          </Heading>
+
         </Box>
       )}
 
@@ -272,30 +252,10 @@ export default function Home() {
         </>
       )}
 
-      <Dependency key={library.title} {...library}></Dependency>
+      
 
-      <Box mb={3}>
-        <Divider />
-      </Box>
-
-      <Grid
-        templateColumns={{
-          md: 'repeat(2, 1fr)',
-          lg: 'repeat(3, 1fr)'
-        }}
-        gap={8}
-        mb={14}
-      >
-        {products.map((product) => (
-          <Product key={product.title} {...product}></Product>
-        ))}
-      </Grid>
-
-      <Grid templateColumns={{ md: '1fr 1fr' }} gap={8} mb={20}>
-        {dependencies.map((dependency) => (
-          <Dependency key={dependency.title} {...dependency}></Dependency>
-        ))}
-      </Grid>
+      
+      
       <Box mb={3}>
         <Divider />
       </Box>
