@@ -42,7 +42,7 @@ const chainassets: AssetList = assets.find(
   (chain) => chain.chain_name === chainName
 ) as AssetList;
 const coin: Asset = chainassets.assets.find(
-  (asset) => asset.base === 'ujuno'
+  (asset) => asset.base === 'ujunox'
 ) as Asset;
 
 const sendTokens = (
@@ -80,9 +80,21 @@ const sendTokens = (
       gas: '86364'
     };
     const response = await stargateClient.signAndBroadcast(address, [msg], fee);
-    setResp(JSON.stringify(response, null, 2));
+    //setResp(JSON.stringify(response, null, 2));
   };
 };
+
+
+
+
+
+
+
+
+
+
+
+
 
 export default function Home() {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -95,6 +107,9 @@ export default function Home() {
     currentWallet,
     walletStatus
   } = useWallet();
+
+
+
 
   useEffect(() => {
     setCurrentChain(chainName);
@@ -141,12 +156,28 @@ export default function Home() {
   const [hydrogenClient, setHydrogenClient] = useState<HydrogenClient | null>(null);
   useEffect(() => {
     if (address) {
-    getCosmWasmClient().then((cosmwasmClient) => {
-      if (cosmwasmClient) {
-        setHydrogenClient(new HydrogenClient(cosmwasmClient, address, "juno18e5vgcz5j3hdu2eg08lnuhz02hu98w0nu4plajdxexdr2wsvlk7smuk3dj"));
+      getCosmWasmClient().then((cosmwasmClient) => {
+        if (cosmwasmClient) {
+          setHydrogenClient(new HydrogenClient(cosmwasmClient, address, "juno18e5vgcz5j3hdu2eg08lnuhz02hu98w0nu4plajdxexdr2wsvlk7smuk3dj"));
       }
     })}
   }, [getCosmWasmClient, address]);
+
+  const listContainer = async () => {
+    const list = await hydrogenClient?.containers();
+    console.log(list);
+    console.log('me tocaste')
+  }
+
+  const produceContract = async () => {
+    const list = await hydrogenClient?.produce({
+    colorSpectrum: "GREEN",
+    price: {denom: "ujunox", amount: "100"},
+    volume: 50
+  },{amount: [{denom: "ujunox", amount: "1000000"}], gas: "1000000"}, undefined, []);
+    console.log(list);
+    console.log('me tocaste')
+  }
 
   const color = useColorModeValue('primary.500', 'primary.200');
   return (
@@ -201,6 +232,14 @@ export default function Home() {
         </Box>
       )}
 
+        {hydrogenClient && (
+        <div>
+          <Button onClick={()=>listContainer()}>OE oe</Button>
+          <Button onClick={()=>produceContract()}>Kk kk</Button>
+        
+        </div>
+          
+        )}
       {walletStatus === WalletStatus.Connected && (
         <Box textAlign="center">
           <Flex mb={4}>
