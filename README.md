@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-lorum ipsum .................
+Work in progress for hydrochain. Needs better implementation of chakra ui and understanding of nextjs in order to connect with contracts API's.
 
 ## Prerequisites
 
